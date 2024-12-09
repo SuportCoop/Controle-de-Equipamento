@@ -74,6 +74,27 @@ class Product(models.Model):
 
     def __str__(self):
         return self.title
+    
+#Perifericos
+class Perifericos(models.Model):
+    
+    title = models.CharField(max_length=100,verbose_name='Titulo')
+    modelo = models.CharField(max_length=100,verbose_name='Modelo')
+    amount = models.CharField(max_length=100,verbose_name='Quantidade')
+    brand = models.ForeignKey(Brand, on_delete= models.PROTECT,
+                              related_name='produtos', verbose_name='Marca')
+    is_new = models.BooleanField(default=True, verbose_name= 'Novo')
+    is_used = models.BooleanField(default=True, verbose_name= 'Usado')
+    delivery = models.DateTimeField(auto_now_add=True, verbose_name='Entregue em')
+    description = models.TextField(null=True, blank=True, verbose_name='Descrição')
+    
+    class Meta:
+        ordering = ['title']
+        verbose_name = 'Periferico'
+
+    def __str__(self):
+        return self.title
+    
 
 #Filiais
 class Branch(models.Model):
@@ -128,6 +149,10 @@ class Controle(models.Model):
 
     category = models.ForeignKey(Category, on_delete=models.PROTECT,
                                  related_name='controls', verbose_name='Departamento')
+    
+    img = models.ImageField(upload_to='products/',blank=True, null=True)
+    img1 = models.ImageField(upload_to='products/',blank=True, null=True)
+    img2 = models.ImageField(upload_to='products/',blank=True, null=True)
 
     is_active = models.BooleanField(default=True, verbose_name='Ativo')
     is_inactive = models.BooleanField(verbose_name='Inativo')
